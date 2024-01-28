@@ -4,6 +4,7 @@ run-name: ${{ github.actor }} says woof
 
 on:
   push:
+  pull_request:
 
 jobs:
   debug-contexts:
