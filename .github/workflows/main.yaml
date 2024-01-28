@@ -35,6 +35,7 @@ jobs:
       - name: reviewdog
         uses: reviewdog/action-eslint@v1
         with:
+          fail_on_error: true
           # reporter: ${{ contains(github.ref, 'refs/pull/') && 'github-pr-review' || 'github-check' }}
           reporter: 'github-pr-review'
           eslint_flags: ". --ext ts,tsx"
