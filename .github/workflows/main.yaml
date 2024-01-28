@@ -30,3 +30,9 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           cache: yarn
+
+      - name: reviewdog
+        uses: reviewdog/action-eslint@v1
+        with:
+          reporter: ${{ contains(github.ref, 'refs/pull/') && 'github-pr-review' || 'github-check' }}
+          eslint_flags: "src/"
