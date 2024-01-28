@@ -30,6 +30,7 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           cache: yarn
+      - run: yarn install --frozen-lockfile
 
       - name: reviewdog
         uses: reviewdog/action-eslint@v1
