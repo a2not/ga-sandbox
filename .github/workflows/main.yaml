@@ -35,7 +35,6 @@ jobs:
       - name: reviewdog
         uses: reviewdog/action-eslint@v1
         with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
           fail_on_error: true
           reporter: github-check
           eslint_flags: ". --ext ts,tsx"
