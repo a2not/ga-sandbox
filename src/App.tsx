@@ -1,43 +1,44 @@
-import { FormEventHandler, useState } from 'react'
+import { type FormEventHandler, useState, type ReactNode, useCallback } from 'react'
 import './App.css'
-import { createPromiseClient } from "@connectrpc/connect";
-import { createGrpcWebTransport } from "@connectrpc/connect-web";
-import { EchoService } from "./connect-web-gen/echo_connect";
+import { createPromiseClient } from '@connectrpc/connect'
+import { createGrpcWebTransport } from '@connectrpc/connect-web'
+import { EchoService } from './connect-web-gen/echo_connect'
 
 const transport = createGrpcWebTransport({
-    baseUrl: "http://localhost:8080",
-});
+  baseUrl: 'http://localhost:8080'
+})
 
-const echoClient = createPromiseClient(EchoService, transport);
+const echoClient = createPromiseClient(EchoService, transport)
 
-function App() {
-    return (
+function App (): ReactNode {
+  return (
         <div className="App">
             <h1>grpc-web (cjs) in Vite</h1>
             <div className="card">
                 <EchoServiceForm />
             </div>
         </div>
-    )
+  )
 }
 
 export default App
 
-function EchoServiceForm() {
-    const [outputMessage, setOutputMessage] = useState("")
+function EchoServiceForm (): ReactNode {
+  const [outputMessage, setOutputMessage] = useState('')
 
-    const handleSubmit: FormEventHandler<HTMLFormElement> = async (event) => {
-        event.preventDefault();
-        const form = new FormData(event.currentTarget);
-        const inputMessage = form.get("inputMessage")?.toString() || "";
+  const handleSubmit = useCallback<FormEventHandler<HTMLFormElement>>(
+    async (event) => {
+      event.preventDefault()
+      const form = new FormData(event.currentTarget)
+      const inputMessage = form.get('inputMessage')?.toString() ?? ''
 
-        const resp = await echoClient.echo({
-            message: inputMessage,
-        });
-        setOutputMessage(resp.message)
-    };
+      const resp = await echoClient.echo({
+        message: inputMessage
+      })
+      setOutputMessage(resp.message)
+    }, [setOutputMessage])
 
-    return (
+  return (
         <>
             <form onSubmit={handleSubmit}>
                 <label>
@@ -48,5 +49,5 @@ function EchoServiceForm() {
             </form>
             <p>Echo output: {outputMessage}</p>
         </>
-    )
+  )
 }
