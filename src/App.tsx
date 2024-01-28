@@ -24,7 +24,6 @@ function App (): ReactNode {
 export default App
 
 function EchoServiceForm (): ReactNode {
-  const s = 12
   const [outputMessage, setOutputMessage] = useState('')
 
   const handleSubmit = useCallback<FormEventHandler<HTMLFormElement>>(
